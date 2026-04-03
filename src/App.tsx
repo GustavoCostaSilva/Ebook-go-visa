@@ -28,23 +28,12 @@ import { motion, AnimatePresence } from 'motion/react';
 // --- Components ---
 
 const SecurityBanner = () => (
-  <div className="w-full bg-primary text-white px-6 py-2.5 flex items-center justify-center gap-4 z-[70] relative overflow-hidden">
-    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_4s_infinite] skew-x-12"></div>
-    <div className="flex items-center gap-2.5">
-      <div className="w-5 h-5 rounded-full bg-secondary/20 flex items-center justify-center">
-        <Lock className="w-2.5 h-2.5 text-secondary" />
-      </div>
-      <span className="font-headline font-black text-[8px] md:text-[10px] tracking-[0.4em] uppercase opacity-80">
-        Conexão Criptografada • AES-256
-      </span>
-    </div>
-    <div className="hidden md:block w-px h-4 bg-white/10 mx-2"></div>
-    <div className="hidden md:flex items-center gap-2.5">
-      <div className="w-5 h-5 rounded-full bg-secondary/20 flex items-center justify-center">
-        <Shield className="w-2.5 h-2.5 text-secondary" />
-      </div>
-      <span className="font-headline font-black text-[8px] md:text-[10px] tracking-[0.4em] uppercase opacity-80">
-        Protocolo de Sigilo Nível 4
+  <div className="w-full z-[70] relative">
+    <div className="w-full h-1.5 bg-[#1a1a1a]"></div>
+    <div className="w-full bg-secondary text-white px-6 md:px-12 py-2.5 flex items-center justify-center gap-3">
+      <Phone className="w-4 h-4 fill-current" />
+      <span className="font-headline font-black text-[10px] md:text-[13px] tracking-widest uppercase">
+        EMERGÊNCIA 24H: 689 316 1940
       </span>
     </div>
   </div>
@@ -70,7 +59,7 @@ const Header = () => {
       className={`fixed left-0 w-full z-50 transition-all duration-700 ease-in-out
         ${isScrolled 
           ? 'top-0 py-3 bg-white/80 backdrop-blur-xl border-b border-black/5 shadow-[0_10px_40px_rgba(0,0,0,0.04)]' 
-          : 'top-10 py-6 bg-transparent'}`}
+          : 'top-12 py-6 bg-transparent'}`}
     >
       {/* Scroll Progress Bar */}
       <div className="absolute bottom-0 left-0 h-[2px] bg-secondary/30 w-full overflow-hidden">
@@ -97,31 +86,16 @@ const Header = () => {
             <span className="text-xl md:text-2xl font-black tracking-tighter text-primary uppercase font-headline leading-none">
               GO VISA <span className="text-secondary">CORP</span>
             </span>
-            <div className="flex items-center gap-2 mt-1.5">
-              <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-[8px] font-black tracking-[0.4em] text-primary/40 uppercase leading-none">
-                Vigilância Ativa
-              </span>
-            </div>
           </div>
         </div>
         
         {/* Action Section */}
         <div className="flex items-center gap-4 md:gap-10">
-          <div className="hidden lg:flex flex-col items-end">
-            <div className="flex items-center gap-2 text-primary/60 font-headline font-black text-[9px] uppercase tracking-[0.3em]">
-              <Lock className="w-3 h-3 text-secondary" />
-              <span>Ambiente Seguro</span>
-            </div>
-            <span className="text-[8px] font-bold text-primary/30 uppercase tracking-widest mt-1">SSL 256-BIT ENCRYPTION</span>
-          </div>
-
           <a 
             href="#contact" 
             className="relative group px-6 md:px-10 py-3.5 md:py-4 rounded-xl font-headline font-black text-[9px] md:text-[11px] tracking-[0.3em] uppercase transition-all duration-500 hover:scale-105 active:scale-95 shadow-lg hover:shadow-secondary/30"
           >
             <div className="absolute inset-0 bg-primary group-hover:bg-secondary transition-colors duration-500"></div>
-            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
             <span className="relative z-10 text-white flex items-center gap-3">
               <Download className="w-4 h-4" />
               <span className="hidden sm:inline">Baixar Guia Grátis</span>
@@ -164,16 +138,6 @@ const Hero = () => (
               Baixar Guia Gratuito <Download className="w-4 h-4" />
             </span>
           </a>
-          <div className="flex -space-x-3">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="w-10 h-10 rounded-full border-2 border-white overflow-hidden bg-surface-container-high">
-                <img src={`https://picsum.photos/seed/user${i}/100/100`} alt="User" className="w-full h-full object-cover grayscale" referrerPolicy="no-referrer" />
-              </div>
-            ))}
-            <div className="h-10 px-4 rounded-full bg-surface-container-low border-2 border-white flex items-center justify-center">
-              <span className="text-[10px] font-black text-primary/40">+1.2k protegidos</span>
-            </div>
-          </div>
         </div>
 
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-8 border-t border-black/5 pt-12">
@@ -377,38 +341,74 @@ const CaptureSection = () => (
           </p>
         </div>
         
-        <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+        <form 
+          method="POST" 
+          id="zcampaignOptinForm" 
+          action="https://qewrmw-zngp.maillist-manage.com/weboptin.zc" 
+          target="_zcSignup" 
+          onSubmit={(e) => {
+            const form = e.currentTarget;
+            const spmSubmit = form.querySelector("#zc_spmSubmit");
+            if (spmSubmit) spmSubmit.remove();
+            // The form will submit naturally after this if we don't preventDefault
+          }}
+          className="space-y-6"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-primary/40 ml-2">Nome ou Codinome</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-primary/40 ml-2" htmlFor="EMBED_FORM_NAME_LABEL">Nome</label>
               <input 
                 className="w-full bg-surface-container-low p-5 rounded-xl outline-none font-medium border border-transparent focus:border-primary/10 transition-all" 
-                placeholder="Como quer ser chamado?" 
+                placeholder="Seu nome" 
                 type="text"
+                name="LASTNAME"
+                id="EMBED_FORM_NAME_LABEL"
+                required
               />
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-primary/40 ml-2">WhatsApp (Opcional)</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-primary/40 ml-2" htmlFor="EMBED_FORM_EMAIL_LABEL">E-mail para envio</label>
               <input 
                 className="w-full bg-surface-container-low p-5 rounded-xl outline-none font-medium border border-transparent focus:border-primary/10 transition-all" 
-                placeholder="+1 (000) 000-0000" 
-                type="tel"
+                placeholder="seuemail@exemplo.com" 
+                type="email"
+                name="CONTACT_EMAIL"
+                id="EMBED_FORM_EMAIL_LABEL"
+                required
               />
             </div>
           </div>
-          <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-primary/40 ml-2">E-mail para envio</label>
-            <input 
-              className="w-full bg-surface-container-low p-5 rounded-xl outline-none font-medium border border-transparent focus:border-primary/10 transition-all" 
-              placeholder="seuemail@exemplo.com" 
-              type="email"
-            />
-          </div>
           
-          <button className="w-full bg-primary text-white py-6 rounded-2xl font-headline font-black uppercase tracking-[0.3em] text-xs shadow-2xl hover:bg-secondary transition-all active:scale-95 flex items-center justify-center gap-4 group">
-            <span>Quero o Guia de Sobrevivência</span>
+          <button 
+            type="submit"
+            name="SIGNUP_SUBMIT_BUTTON"
+            id="zcWebOptin"
+            className="w-full bg-primary text-white py-6 rounded-2xl font-headline font-black uppercase tracking-[0.3em] text-xs shadow-2xl hover:bg-secondary transition-all active:scale-95 flex items-center justify-center gap-4 group"
+          >
+            <span>Quero baixar o Ebook</span>
             <Download className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
           </button>
+
+          {/* Zoho Hidden Fields */}
+          <input type="hidden" id="fieldBorder" value="" />
+          <input type="hidden" id="submitType" name="submitType" value="optinCustomView" />
+          <input type="hidden" id="emailReportId" name="emailReportId" value="" />
+          <input type="hidden" id="formType" name="formType" value="QuickForm" />
+          <input type="hidden" name="zx" id="cmpZuid" value="13697e18b" />
+          <input type="hidden" name="zcvers" value="3.0" />
+          <input type="hidden" name="oldListIds" id="allCheckedListIds" value="" />
+          <input type="hidden" id="mode" name="mode" value="OptinCreateView" />
+          <input type="hidden" id="zcld" name="zcld" value="1158097a36e3a6ddb" />
+          <input type="hidden" id="zctd" name="zctd" value="1158097a36e378f79" />
+          <input type="hidden" id="document_domain" value="" />
+          <input type="hidden" id="zc_Url" value="qewrmw-zngp.maillist-manage.com" />
+          <input type="hidden" id="new_optin_response_in" value="0" />
+          <input type="hidden" id="duplicate_optin_response_in" value="0" />
+          <input type="hidden" name="zc_trackCode" id="zc_trackCode" value="ZCFORMVIEW" />
+          <input type="hidden" id="zc_formIx" name="zc_formIx" value="3z503f40da47d1d55ff4df4d2908f3c5e24e566a419a1f327631fe0e58f8002200" />
+          <input type="hidden" id="viewFrom" value="URL_ACTION" />
+          <input type="hidden" id="scriptless" name="scriptless" value="yes" />
+          <input type="hidden" id="zc_spmSubmit" name="zc_spmSubmit" value="ZCSPMSUBMIT" />
           
           <div className="flex items-center justify-center gap-4 pt-4">
             <div className="flex items-center gap-2">
@@ -454,7 +454,7 @@ const FinalCTA = () => (
           <a href="#contact" className="bg-white text-primary px-12 py-6 rounded-2xl font-headline font-black uppercase tracking-[0.3em] text-xs hover:bg-secondary hover:text-white transition-all shadow-2xl active:scale-95">
             Baixar Guia Agora
           </a>
-          <a href="https://wa.me/14075308780" className="bg-transparent border-2 border-white/20 text-white px-12 py-6 rounded-2xl font-headline font-black uppercase tracking-[0.3em] text-xs hover:bg-white/10 transition-all active:scale-95">
+          <a href="https://api.whatsapp.com/send/?phone=14075308780&text=Ol%C3%A1%2C+vim+pela+pagina+do+Ebook+e+gostaria+de+uma+triagem+sobre+o+meu+caso&utm_source=web&utm_medium=pagina_obrigado&utm_campaign=ebook_funnel" className="bg-transparent border-2 border-white/20 text-white px-12 py-6 rounded-2xl font-headline font-black uppercase tracking-[0.3em] text-xs hover:bg-white/10 transition-all active:scale-95">
             Falar com Especialista
           </a>
         </div>
@@ -474,39 +474,9 @@ const Footer = () => (
               GO VISA <span className="opacity-40">CORP</span>
             </div>
           </div>
-          <div className="flex items-center gap-4 px-3 py-1 bg-white/5 rounded-full border border-white/10">
-            <div className="w-1 h-1 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="text-[8px] font-black uppercase tracking-widest text-white/40">Conexão Criptografada</span>
-          </div>
         </div>
         
-        <nav className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4">
-          {[
-            { label: 'Guia Gratuito', href: '#contact' },
-            { label: 'Diagnóstico', href: '#diagnosis' },
-            { label: 'Privacidade', href: '#' },
-            { label: 'Contato', href: 'https://wa.me/14075308780' }
-          ].map(link => (
-            <a 
-              key={link.label} 
-              href={link.href} 
-              className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-white transition-all hover:translate-y-[-1px]"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-
         <div className="flex items-center gap-8">
-          <div className="hidden lg:flex flex-col items-end">
-            <p className="text-[10px] text-white/40 font-headline font-black tracking-widest uppercase">
-              © 2024 • ORLANDO, FL
-            </p>
-            <p className="text-[8px] text-white/20 font-black uppercase tracking-widest">
-              Protecting Human Dignity
-            </p>
-          </div>
-
           <button 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="w-12 h-12 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white hover:text-secondary transition-all active:scale-95 group"
@@ -518,7 +488,7 @@ const Footer = () => (
 
       <div className="pt-8 border-t border-white/5">
         <p className="text-[9px] leading-relaxed text-white/30 font-bold uppercase tracking-widest text-center max-w-2xl mx-auto">
-          AVISO: ESTA PÁGINA É EDUCATIVA. EM EMERGÊNCIAS NOS EUA, LIGUE 911 OU 1-888-373-7888 (LINHA NACIONAL DE TRÁFICO HUMANO).
+          Aviso Legal: Publicidade jurídica. Responsável: Jeffrey Weingrad, Esq. Licenciado (Bar #5794276), TX (Bar #24145286) e NY.
         </p>
       </div>
     </div>
